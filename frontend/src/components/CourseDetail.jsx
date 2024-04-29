@@ -13,30 +13,34 @@ const CourseDetail = () => {
     const [allStudents, setAllStudents] = useState([]);
     const [showSelector, setShowSelector] = useState(false);
 
+    // Define fetchCourseDetails as a standalone function so it can be called from multiple places
+    const fetchCourseDetails = async () => {
+        try {
+            const responseCourse = await axiosWithAuth.get(`/courses/${courseId}`);
+            setCourse(responseCourse.data);
+
+            const responseStudents = await axiosWithAuth.get(`/courses/${courseId}/students`);
+            setStudents(responseStudents.data);
+
+            // Fetch grades for the course
+            const responseGrades = await axiosWithAuth.get(`/grades/course/${courseId}`);
+            const gradesMap = responseGrades.data.reduce((acc, grade) => {
+                acc[grade.studentId._id] = grade.score;  // Assuming grade.studentId is populated with student details
+                return acc;
+            }, {});
+            setGrades(gradesMap);
+
+            // Fetch all students (assuming the endpoint is `/students`)
+            const responseAllStudents = await axiosWithAuth.get('/students');
+            setAllStudents(responseAllStudents.data);
+        } catch (error) {
+            console.error('Failed to fetch course or students:', error);
+        }
+    };
+
     useEffect(() => {
-        const fetchCourseDetails = async () => {
-            try {
-                const responseCourse = await axiosWithAuth.get(`/courses/${courseId}`);
-                setCourse(responseCourse.data);
-    
-                const responseStudents = await axiosWithAuth.get(`/courses/${courseId}/students`);
-                setStudents(responseStudents.data);
-    
-                // Fetch grades for the course
-                const responseGrades = await axiosWithAuth.get(`/grades/course/${courseId}`);
-                const gradesMap = responseGrades.data.reduce((acc, grade) => {
-                    acc[grade.studentId._id] = grade.score;  // Assuming grade.studentId is populated with student details
-                    return acc;
-                }, {});
-                setGrades(gradesMap);
-            } catch (error) {
-                console.error('Failed to fetch course or students:', error);
-            }
-        };
-    
         fetchCourseDetails();
-    }, [courseId]);
-    
+    }, [courseId]);  // Ensure fetchCourseDetails is only called when courseId changes
 
     const handleStudentsAdded = () => {
         // Refetch students to update the list after adding new ones

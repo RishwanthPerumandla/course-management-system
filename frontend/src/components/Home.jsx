@@ -1,14 +1,13 @@
 import React from 'react';
-import backgroundImage from '../assets/image.png'; // Replace with the path to your image
+import backgroundImage from '../assets/image.png'; // Background image for the hero section
+import universityLogo from '../assets/download.png'; // Logo image path
 
 const Home = () => {
   const styles = {
     container: {
       display: 'flex',
       flexDirection: 'column',
-      // minHeight: '100vh',
-      // height:'100vh',
-      // width: '100vw',
+      minHeight: '100vh',
       fontFamily: 'Arial, sans-serif',
       color: '#333',
       backgroundImage: `url(${backgroundImage})`,
@@ -21,31 +20,47 @@ const Home = () => {
       justifyContent: 'space-between',
       alignItems: 'center',
       padding: '20px',
-      backgroundColor: 'rgba(255, 255, 255, 1)', // Semi-transparent white
+      backgroundColor: 'rgba(255, 255, 255, 0.85)',
     },
     logo: {
       fontWeight: 'bold',
       fontSize: '24px',
     },
+    leftSection: {
+      display: 'flex',
+      alignItems: 'center',
+    },
+    logoImage: {
+      width: '50px',
+      height: '50px',
+      marginRight: '10px',
+    },
+    universityName: {
+      fontWeight: 'bold',
+      fontSize: '24px',
+      color: '#0056b3',
+    },
     nav: {
       '& a': {
         textDecoration: 'none',
         color: '#0056b3',
-        margin: ' 10px',
+        padding: '10px 20px',
+        borderRadius: '5px',
+        border: '1px solid #0056b3',
+        margin: '0 10px',
+        display: 'inline-block',
       },
     },
     main: {
       textAlign: 'center',
-      flex: '1', // Take remaining vertical space
-      paddingTop: '100px', // Adjust as needed
+      flex: '1',
+      paddingTop: '50px',
+      paddingBottom: '50px',
     },
     title: {
-      fontSize: '48px',
+      fontSize: '42px',
       color: '#0056b3',
-    },
-    subtitle: {
-      fontSize: '20px',
-      margin: '20px 0',
+      fontWeight: 'bold',
     },
     button: {
       padding: '10px 20px',
@@ -55,71 +70,66 @@ const Home = () => {
       border: 'none',
       borderRadius: '5px',
       cursor: 'pointer',
+      marginTop: '20px',
     },
     sections: {
       display: 'flex',
       justifyContent: 'center',
-      margin: '40px 0',
+      flexWrap: 'wrap',
+      padding: '20px',
     },
     section: {
-      margin: '0 15px',
+      margin: '15px',
       padding: '20px',
       boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
       borderRadius: '5px',
-      backgroundColor: 'rgba(255, 255, 255, 0.8)',
-      //width: '300px', // Adjust as needed
+      backgroundColor: 'rgba(255, 255, 255, 0.85)',
+      width: '300px',
     },
     footer: {
       textAlign: 'center',
       padding: '10px 0',
-      backgroundColor: 'rgba(255, 255, 255, 1)', // Semi-transparent white
-      marginTop: 'auto', // Push the footer to the bottom
-    },
-    registerButton: {
-        marginLeft: '20px', // Adjust the margin as necessary
-      },
-      navLink: {
-        textDecoration: 'none',
-        color: '#0056b3',
-        margin: '0 10px',
-        padding: '5px 10px',
-        display: 'inline-block', // To allow margin to take effect
-      },
+      backgroundColor: 'rgba(255, 255, 255, 0.85)',
+      color: '#333',
+    }
   };
 
   return (
     <div style={styles.container}>
       <header style={styles.header}>
-        <div style={styles.logo}>Course Management System</div>
+        <div style={styles.leftSection}>
+          <img src={universityLogo} alt="University Logo" style={styles.logoImage} />
+          <div>
+            <div style={styles.universityName}>Course Assessment Management System</div>
+          </div>
+        </div>
         <nav style={styles.nav}>
-          <a href="/login" style={styles.navLink}>LOGIN</a>
-          <a href="/login" style={{ ...styles.navLink, ...styles.registerButton }}>REGISTER</a>
+          <a href="/login" style={styles.navLink}>Login</a>
+          <a href="/register" style={styles.navLink}>Register</a>
         </nav>
       </header>
       
       <main style={styles.main}>
-        <h1 style={styles.title}>Connecting Talent with Opportunity</h1>
-        <br />
-        <br />
-        <button style={styles.button}>GET STARTED</button>
+        <h1 style={styles.title}>Enhance Your Learning Experience</h1>
+        <button style={styles.button} onClick={() => alert('Getting Started!')}>Get Started</button>
         <div style={styles.sections}>
           <div style={styles.section}>
             <h2>Our Mission</h2>
-            <p>The Course Management System aims to create opportunities...</p>
+            <p>To enhance the educational outcomes through efficient course assessment.</p>
           </div>
           <div style={styles.section}>
             <h2>How It Works</h2>
-            <p>Instructors post courses, students enroll, and the best match is made...</p>
+            <p>Instructors and students interact seamlessly to foster an environment of continuous improvement.</p>
           </div>
           <div style={styles.section}>
             <h2>Join Us</h2>
-            <p>Become a part of our growing community of professionals...</p>
+            <p>Start managing and assessing courses effectively today.</p>
           </div>
         </div>
       </main>
       
       <footer style={styles.footer}>
-        Â© 2024 Course Management System. All rights reserved.
+        © 2024 Course Assessment Management System. All rights reserved.
       </footer>
     </div>
   );

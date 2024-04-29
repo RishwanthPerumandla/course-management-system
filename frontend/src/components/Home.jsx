@@ -5,8 +5,8 @@ import { Button, Typography } from '@mui/material';
 import { useAuth } from '../context/AuthContext'; // Import the useAuth hook
 
 const Home = () => {
-  const { user } = useAuth(); // Access user details from the context
-
+  const { username } = useAuth(); // Access user details from the context
+console.log(username)
   const styles = {
     container: {
       display: 'flex',
@@ -108,9 +108,9 @@ const Home = () => {
           </div>
         </div>
         <nav style={styles.nav}>
-          {user ? (
+          {username ? (
             <div>
-              <Typography variant="h6" color="primary">Hi, {user.username}</Typography> {/* Adjust based on how you store username */}
+              <Typography variant="h6" color="primary">Hi, {username}</Typography> {/* Adjust based on how you store username */}
             </div>
           ) : (
             <>

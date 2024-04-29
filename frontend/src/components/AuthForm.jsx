@@ -34,7 +34,7 @@ function AuthForm() {
         const endpoint = isLogin ? 'login' : 'signup';
         try {
             const response = await axios.post(`http://localhost:3000/api/users/${endpoint}`, formData);
-            login(response.data.token, response.data.role);
+            login(response.data.token, response.data.role, response.data.username);
             // Direct users based on their role
             if (response.data.role === "admin") {
                 navigate('/courses');

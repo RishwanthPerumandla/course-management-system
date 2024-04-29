@@ -3,15 +3,15 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext'; // Adjust this path as necessary
 
 function PrivateRoute({ children, role }) {
-    const { user } = useAuth();
+    const { isAuthenticated,userRole } = useAuth();
     const location = useLocation();
 
-    if (!user) {
+    if (!isAuthenticated) {
         // Redirect to login
         return <Navigate to="/" state={{ from: location }} replace />;
     }
 
-    if (role && user.role !== role) {
+    if (role && userRole !== role) {
         // Redirect to unauthorized or dashboard
         return <Navigate to="/unauthorized" replace />;
     }

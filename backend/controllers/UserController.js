@@ -85,6 +85,7 @@ const UserController = {
             await newUser.save();
             res.status(201).send('User created');
         } catch (error) {
+            console.log(error)
             res.status(500).send('Server error');
         }
     },

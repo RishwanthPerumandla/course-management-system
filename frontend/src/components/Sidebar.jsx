@@ -24,9 +24,9 @@ const Sidebar = () => {
         { text: 'Home', icon: <HomeIcon />, path: '/' },
         { text: 'Courses', icon: <SurveyIcon />, path: '/courses' },
         { text: 'Profile', icon: <SurveyIcon />, path: '/profile' },
-        ...(userRole === 'admin' ? [{ text: 'Create Survey', icon: <SurveyIcon />, path: '/surveys/create' }] : []),
+        // ...(userRole === 'admin' ? [{ text: 'Create Survey', icon: <SurveyIcon />, path: '/surveys/create' }] : []),
         ...(userRole === 'admin' ? [{ text: 'Users', icon: <UserIcon />, path: '/users/' }] : []),  
-        ...(userRole === 'admin' ? [{ text: 'Responses', icon: <UserIcon />, path: '/responses/' }] : [])
+        // ...(userRole === 'admin' ? [{ text: 'Responses', icon: <UserIcon />, path: '/responses/' }] : [])
     ];
 
     const handleNavigation = (path) => {

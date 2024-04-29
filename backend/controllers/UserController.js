@@ -1,31 +1,34 @@
 const User = require('../models/User'); // Adjust the path as necessary
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const UserController = {
     login: async (req, res) => {
+        const { email, password } = req.body;
         try {
-            const { email, password } = req.body;
             const user = await User.findOne({ email });
             if (!user) {
                 return res.status(404).send('User not found');
             }
-
             const isMatch = await bcrypt.compare(password, user.password);
             if (!isMatch) {
                 return res.status(401).send('Invalid credentials');
             }
-
             const token = jwt.sign({ _id: user._id, role: user.role }, process.env.JWT_KEY, { expiresIn: '1h' });
-            res.json({ token });
+            res.json({ message: 'Logged in successfully', token, role: user.role });
         } catch (error) {
+            console.log(error);
             res.status(500).send('Server error');
         }
     },
 
     signup: async (req, res) => {
+        const { username, email, password, role } = req.body;
         try {
-            const { username, email, password, role } = req.body;
+            const existingUser = await User.findOne({ email });
+            if (existingUser) {
+                return res.status(409).send('Email already in use');
+            }
             const hashedPassword = await bcrypt.hash(password, 10);
             const newUser = new User({
                 username,
@@ -33,10 +36,11 @@ const UserController = {
                 password: hashedPassword,
                 role
             });
-
             await newUser.save();
-            res.status(201).send('User registered');
+            const token = jwt.sign({ _id: newUser._id, role: newUser.role }, process.env.JWT_KEY, { expiresIn: '1h' });
+            res.status(201).json({ message: 'User registered successfully', token });
         } catch (error) {
+            console.log(error);
             res.status(500).send('Server error');
         }
     },

@@ -18,6 +18,7 @@ import CourseEdit from './components/CourseEdit';
 import CourseDetail from './components/CourseDetail';
 import UserList from './components/UserList';
 import UserEdit from './components/UserEdit';
+import PrivateRoute from './components/PrivateRoute';
 
 const drawerWidth = 240;
 
@@ -39,7 +40,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(({
 }));
 
 function App() {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -61,14 +62,15 @@ function App() {
             <Route path="/login" element={<AuthForm />} />
             {/* <Route path="/dashboard" element={<Dashboard />} /> */}
             <Route path="/admin/users" element={<UserManagement />} />
-            <Route path="/courses" element={<CoursesPage />} />
-            <Route path="/courses/create" element={<CourseEdit />} />
-            <Route path="/courses/edit/:courseId" element={<CourseEdit />} />
-            <Route path="/courses/:courseId" element={<CourseDetail />} />
+            <Route path="/courses" element={<PrivateRoute><CoursesPage /></PrivateRoute>} />
+            <Route path="/courses/create" element={<PrivateRoute><CourseEdit /></PrivateRoute>} />
+            <Route path="/courses/edit/:courseId" element={<PrivateRoute><CourseEdit /></PrivateRoute>} />
+            <Route path="/courses/:courseId" element={<PrivateRoute><CourseDetail /></PrivateRoute>} />
+            <Route path="/courses/:courseId/outcome" element={<PrivateRoute><CourseDetail /></PrivateRoute>} />
             <Route path="/assessments" element={<AssessmentManagement />} />
             <Route path="/grades" element={<GradeManagement />} />
-            <Route path="/users/" element={<UserList />} />
-            <Route path="/users/create" element={<UserEdit />} />
+            <Route path="/users/" element={<PrivateRoute><UserList /></PrivateRoute>} />
+            <Route path="/users/create" element={<PrivateRoute><UserEdit /></PrivateRoute>} />
             <Route path="/users/edit/:userId" element={<UserEdit />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

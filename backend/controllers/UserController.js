@@ -15,7 +15,7 @@ const UserController = {
                 return res.status(401).send('Invalid credentials');
             }
             const token = jwt.sign({ _id: user._id, role: user.role }, process.env.JWT_KEY, { expiresIn: '1h' });
-            res.json({ message: 'Logged in successfully', token, role: user.role });
+            res.json({ message: 'Logged in successfully', token, role: user.role, username: user.username });
         } catch (error) {
             console.log(error);
             res.status(500).send('Server error');
@@ -38,7 +38,7 @@ const UserController = {
             });
             await newUser.save();
             const token = jwt.sign({ _id: newUser._id, role: newUser.role }, process.env.JWT_KEY, { expiresIn: '1h' });
-            res.status(201).json({ message: 'User registered successfully', token });
+            res.status(201).json({ message: 'User registered successfully', token , username});
         } catch (error) {
             console.log(error);
             res.status(500).send('Server error');

@@ -33,7 +33,7 @@ function AuthForm() {
         event.preventDefault();
         const endpoint = isLogin ? 'login' : 'signup';
         try {
-            const response = await axios.post(`https://course-management-system-tu20.onrender.com/api/users/${endpoint}`, formData);
+            const response = await axios.post(`http://localhost:3000/api/users/${endpoint}`, formData);
             login(response.data.token, response.data.role);
             // Direct users based on their role
             if (response.data.role === "admin") {
@@ -62,6 +62,9 @@ function AuthForm() {
                     <Typography component="h1" variant="h5" style={{ color: '#cfb991', fontWeight: 'bold', textShadow: '2px 2px #000' }}>
                         Fort Wayne
                     </Typography>
+                    <Typography component="h1" variant="h5" style={{ fontWeight: 'bold', fontSize: '60px' }}>
+    CAMS
+</Typography>
                     <Tabs value={isLogin ? 0 : 1} onChange={() => setIsLogin(!isLogin)} aria-label="Login or Register">
                         <Tab label="Login" />
                         <Tab label="Register" />

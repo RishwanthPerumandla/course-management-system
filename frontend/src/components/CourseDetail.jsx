@@ -12,7 +12,7 @@ const CourseDetail = () => {
     const [students, setStudents] = useState([]);
     const [allStudents, setAllStudents] = useState([]);
     const [showSelector, setShowSelector] = useState(false);
-
+const [average, setAverage] = useState(0);
     // Define fetchCourseDetails as a standalone function so it can be called from multiple places
     const fetchCourseDetails = async () => {
         try {
@@ -33,6 +33,9 @@ const CourseDetail = () => {
             // Fetch all students (assuming the endpoint is `/students`)
             const responseAllStudents = await axiosWithAuth.get('/students');
             setAllStudents(responseAllStudents.data);
+            // Fetch all students (assuming the endpoint is `/students`)
+            const responseAverage = await axiosWithAuth.get(`/courses/${courseId}/average`);
+            setAverage(responseAverage.data.averageGrade);
         } catch (error) {
             console.error('Failed to fetch course or students:', error);
         }
@@ -40,7 +43,7 @@ const CourseDetail = () => {
 
     useEffect(() => {
         fetchCourseDetails();
-    }, [courseId]);  // Ensure fetchCourseDetails is only called when courseId changes
+    }, [courseId, average]);  // Ensure fetchCourseDetails is only called when courseId changes
 
     const handleStudentsAdded = () => {
         // Refetch students to update the list after adding new ones
@@ -55,6 +58,9 @@ const CourseDetail = () => {
         <Container>
             <Typography variant="h4" sx={{ mb: 4 }}>
                 Course Detail: {course.courseName} ({course.courseCode})
+            </Typography>
+            <Typography variant="h4" sx={{ mb: 4 }}>
+               Average: {average}
             </Typography>
             <Button variant="outlined" onClick={toggleStudentSelector} sx={{ mb: 2 }}>
                 {showSelector ? 'Hide Student Selector' : 'Add Students to Course'}

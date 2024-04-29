@@ -59,7 +59,7 @@ const UserEdit = () => {
                 <FormControl fullWidth>
                     <InputLabel>Role</InputLabel>
                     <Select name="role" value={user.role} onChange={handleChange} required>
-                        <MenuItem value="user">User</MenuItem>
+                        <MenuItem value="instructor">Instructor</MenuItem>
                         <MenuItem value="admin">Admin</MenuItem>
                         {/* <MenuItem value="moderator">Moderator</MenuItem> */}
                     </Select>

@@ -157,6 +157,31 @@ getStudentsByCourse: async (req, res) => {
             res.status(500).send({ message: "Error grading student", error: error.message });
         }
     },
+
+    calculateAverageGrade : async (req, res) => {
+        const courseId = req.params.courseId;
+      
+        try {
+          // Fetch all grades for the given course
+          const grades = await Grade.find({ courseId });
+      
+          // Calculate the total score and count of grades
+          let totalScore = 0;
+          let gradeCount = 0;
+          for (const grade of grades) {
+            totalScore += grade.score;
+            gradeCount++;
+          }
+      
+          // Calculate the average grade
+          const averageGrade = gradeCount > 0 ? totalScore / gradeCount : 0;
+      
+          res.json({ averageGrade });
+        } catch (error) {
+          console.error(error);
+          res.status(500).json({ message: 'Internal Server Error' });
+        }
+      },
 };
 
 module.exports = CourseController;

@@ -1,8 +1,12 @@
 import React from 'react';
-import backgroundImage from '../assets/image.png'; // Background image for the hero section
+import backgroundImage from '../assets/bg.jpg'; // Background image for the hero section
 import universityLogo from '../assets/download.png'; // Logo image path
+import { Button, Typography } from '@mui/material';
+import { useAuth } from '../context/AuthContext'; // Import the useAuth hook
 
 const Home = () => {
+  const { user } = useAuth(); // Access user details from the context
+
   const styles = {
     container: {
       display: 'flex',
@@ -59,7 +63,7 @@ const Home = () => {
     },
     title: {
       fontSize: '42px',
-      color: '#0056b3',
+      color: 'white',
       fontWeight: 'bold',
     },
     button: {
@@ -104,14 +108,22 @@ const Home = () => {
           </div>
         </div>
         <nav style={styles.nav}>
-          <a href="/login" style={styles.navLink}>Login</a>
-          <a href="/register" style={styles.navLink}>Register</a>
+          {user ? (
+            <div>
+              <Typography variant="h6" color="primary">Hi, {user.username}</Typography> {/* Adjust based on how you store username */}
+            </div>
+          ) : (
+            <>
+              <Button href="/login" color="primary" variant="contained" style={{ marginRight: '5px' }}>Login</Button>
+              <Button href="/register" color="primary" variant="contained">Register</Button>
+            </>
+          )}
         </nav>
       </header>
       
       <main style={styles.main}>
         <h1 style={styles.title}>Enhance Your Learning Experience</h1>
-        <button style={styles.button} onClick={() => alert('Getting Started!')}>Get Started</button>
+        <button style={styles.button} href="/login">Get Started</button>
         <div style={styles.sections}>
           <div style={styles.section}>
             <h2>Our Mission</h2>

@@ -14,6 +14,7 @@ router.put('/:id', CourseController.updateCourse); // Update a course
 router.delete('/:id', CourseController.deleteCourse); // Delete a course
 
 router.get('/:id/students', auth, CourseController.getStudentsByCourse);
+router.get('/:courseId/average', CourseController.calculateAverageGrade);
 router.put('/:courseId/add-students', auth, CourseController.addStudentsToCourse);
 
 

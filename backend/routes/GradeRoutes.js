@@ -12,5 +12,6 @@ router.get('/', GradeController.viewGradesForAssessment); // View grades for an 
 router.get('/:id', GradeController.getGradeById); // Get a specific grade
 router.put('/:id', GradeController.updateGrade); // Update a grade
 router.delete('/:id', GradeController.deleteGrade); // Delete a grade
+router.get('/course/:courseId', GradeController.getGradesForCourse);
 
 module.exports = router;

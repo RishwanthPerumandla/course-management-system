@@ -3,15 +3,16 @@ const Grade = require('../models/Grade'); // Ensure the model path is correct
 const GradeController = {
     recordGrade: async (req, res) => {
         try {
-            const { studentId, assessmentId, score } = req.body;
+            const { studentId, courseId, score } = req.body;
             const newGrade = new Grade({
                 studentId,
-                assessmentId,
+                courseId,
                 score
             });
             await newGrade.save();
             res.status(201).json({ message: "Grade recorded successfully", grade: newGrade });
         } catch (error) {
+            console.log(error)
             res.status(500).send({ message: "Error recording grade", error: error.message });
         }
     },
@@ -63,7 +64,16 @@ const GradeController = {
         } catch (error) {
             res.status(500).send({ message: "Error deleting grade", error: error.message });
         }
-    }
-};
+    },
 
+    getGradesForCourse : async (req, res) => {
+        const { courseId } = req.params;
+        try {
+            const grades = await Grade.find({ courseId }).populate('studentId');
+            res.json(grades);
+        } catch (error) {
+            res.status(500).json({ message: "Failed to fetch grades", error: error.message });
+        }
+},
+}
 module.exports = GradeController;

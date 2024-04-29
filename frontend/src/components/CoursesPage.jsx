@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axiosWithAuth from '../utils/axiosWithAuth';
+import axiosWithAuth from './axiosWithAuth';
 import CourseCard from './CourseCard';
 import { Grid, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';

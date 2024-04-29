@@ -5,6 +5,7 @@ const UserRoutes = require('./routes/UserRoutes');
 const CourseRoutes = require('./routes/CourseRoutes');
 const AssessmentRoutes = require('./routes/AssessmentRoutes');
 const GradeRoutes = require('./routes/GradeRoutes');
+const studentRoutes = require('./routes/studentRoutes'); // Ensure the path is correct
 
 require('dotenv').config()
 
@@ -26,6 +27,7 @@ app.use('/api/users', UserRoutes);
 app.use('/api/courses', CourseRoutes);
 app.use('/api/assessments', AssessmentRoutes);
 app.use('/api/grades', GradeRoutes);
+app.use('/api/students', studentRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);

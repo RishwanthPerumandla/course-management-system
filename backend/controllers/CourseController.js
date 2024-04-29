@@ -100,30 +100,28 @@ getStudentsByCourse: async (req, res) => {
 
     // This controller method is added to handle the addition of students to a course
     addStudentsToCourse: async (req, res) => {
+        const { studentIds } = req.body; // Array of student IDs to add
+        const { courseId } = req.params;
+        
+        console.l
+
         try {
-            const { studentIds } = req.body; // Expecting an array of student IDs
-            const { id } = req.params; // courseId
-            
-            // Validate that all studentIds are valid ObjectId and exist in the database
-            for (const studentId of studentIds) {
-                if (!mongoose.Types.ObjectId.isValid(studentId) || !await Student.findById(studentId)) {
-                    return res.status(404).send({ message: `Student not found with ID: ${studentId}` });
-                }
-            }
-
-            const course = await Course.findByIdAndUpdate(
-                id,
-                { $addToSet: { students: { $each: studentIds } } }, // Prevent duplicate additions
-                { new: true }
-            ).populate('students');
-
+            const course = await Course.findById(courseId);
             if (!course) {
-                return res.status(404).send({ message: "Course not found" });
+                return res.status(404).json({ message: "Course not found" });
             }
-
-            res.json({ message: "Students added to course successfully", course });
+    
+            // Add students only if they are not already enrolled
+            studentIds.forEach(studentId => {
+                if (!course.students.includes(studentId)) {
+                    course.students.push(studentId);
+                }
+            });
+    
+            await course.save();
+            res.status(200).json({ message: "Students added successfully", course });
         } catch (error) {
-            res.status(500).send({ message: "Error adding students to course", error: error.message });
+            res.status(500).json({ message: "Failed to add students to the course", error: error.message });
         }
     },
 

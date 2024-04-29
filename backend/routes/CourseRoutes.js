@@ -13,7 +13,8 @@ router.get('/:id', CourseController.getCourseById); // Get a specific course
 router.put('/:id', CourseController.updateCourse); // Update a course
 router.delete('/:id', CourseController.deleteCourse); // Delete a course
 
-router.get('/:id/students', auth, checkRole('instructor'), CourseController.getStudentsByCourse);
+router.get('/:id/students', auth, CourseController.getStudentsByCourse);
+router.put('/:courseId/add-students', auth, CourseController.addStudentsToCourse);
 
 
 module.exports = router;

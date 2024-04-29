@@ -6,7 +6,7 @@ function auth(req, res, next) {
 
     try {
         // The token is typically sent as a Bearer token
-        const decoded = jwt.verify(token.replace('Bearer ', ''), process.env.JWT_key);
+        const decoded = jwt.verify(token.replace('Bearer ', ''), process.env.JWT_KEY);
         req.user = decoded;
         // console.log(req.user)
         next();

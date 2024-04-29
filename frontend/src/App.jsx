@@ -14,6 +14,9 @@ import NotFound from './components/NotFound'; // You'll need to create this comp
 import Sidebar  from './components/Sidebar';
 import UserList from './components/UserList';
 import UserEdit from './components/UserEdit';
+import CoursesPage from './components/CoursesPage';
+import CourseEdit from './components/CourseEdit';
+import CourseDetail from './components/CourseDetail';
 function App() {
 
   return (
@@ -21,16 +24,21 @@ function App() {
     <AuthProvider>
 
       <BrowserRouter>
-      <Sidebar />
 
+      <Sidebar />
       <Routes>
 
         <Route path="/login" element={<AuthForm />} />
-        {/* <Route path="/" element={<Home />} /> */}
+        <Route path="/" element={<Home />} />
         <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
         <Route path="/profile" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
         <Route path="/admin/users" element={<PrivateRoute role="admin"><UserManagement /></PrivateRoute>} />
-        <Route path="/courses" element={<PrivateRoute><CourseManagement /></PrivateRoute>} />
+        <Route path="/courses" element={<><CoursesPage /></>} />
+        {/* <Route path="/courses" element={<CoursesPage />} /> */}
+        <Route path="/courses/create" element={<PrivateRoute><CourseEdit /></PrivateRoute>} />
+        <Route path="/courses/edit/:courseId" element={<PrivateRoute><CourseEdit /></PrivateRoute>} />
+        <Route path="/courses/:courseId" element={<CourseDetail />} />
+
         <Route path="/assessments" element={<PrivateRoute><AssessmentManagement /></PrivateRoute>} />
         <Route path="/grades" element={<PrivateRoute><GradeManagement /></PrivateRoute>} />
         <Route path="/users/" element={

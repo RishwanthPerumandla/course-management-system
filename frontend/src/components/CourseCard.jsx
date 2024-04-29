@@ -1,27 +1,37 @@
-import { Card, CardActionArea, CardContent, Typography } from '@mui/material';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Card, CardActionArea, CardContent, Typography, CardActions, Button } from '@mui/material';
 
-function CourseCard({ title, code, id }) {
-  const navigate = useNavigate();
+function CourseCard({ course, onDelete, onEdit }) {
+    const navigate = useNavigate();
 
-  const handleCardClick = () => {
-    navigate(`/courses/${id}`); // Route to the course details where `id` is a unique identifier for the course
-  };
+    // Function to handle navigation to course detail
+    const handleNavigateToDetail = () => {
+        navigate(`/courses/${course._id}`);
+    };
 
-  return (
-    <Card sx={{ maxWidth: 345, m: 2 }}>
-      <CardActionArea onClick={handleCardClick}>
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {title}
-          </Typography>
-          <Typography variant="body2" color="textSecondary">
-            {code}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-    </Card>
-  );
+    return (
+        <Card sx={{ maxWidth: 345, m: 2 }}>
+            <CardActionArea onClick={handleNavigateToDetail}>
+                <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                        {course.courseName}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary">
+                        {course.courseCode}
+                    </Typography>
+                </CardContent>
+            </CardActionArea>
+            <CardActions>
+                <Button size="small" color="primary" onClick={() => onEdit(course._id)}>
+                    Edit
+                </Button>
+                <Button size="small" color="secondary" onClick={() => onDelete(course._id)}>
+                    Delete
+                </Button>
+            </CardActions>
+        </Card>
+    );
 }
 
 export default CourseCard;
